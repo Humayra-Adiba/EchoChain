@@ -5,6 +5,13 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Input, TextArea } from './input';
 import { Button } from './button';
+import { FC } from 'react';
+
+interface IParson {
+    id: number;
+    name: string;
+    email: string;
+}
 
 interface ContactForm {
   firstName: string;
@@ -22,14 +29,16 @@ const defaultValue: ContactForm = {
   message: '',
 };
 
-const ContactForm = () => {
+type ContactFormProps = { activePerson: IParson[]};
+
+const ContactForm:FC<ContactFormProps> = ({activePerson}: ContactFormProps) => {
   const [data, setData] = useState<ContactForm>(defaultValue);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setData((prev) => ({
       ...prev,
-      [name]: value, // simply set the field that changed
+      [name]: value, 
     }));
   };
 

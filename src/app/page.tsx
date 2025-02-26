@@ -1,9 +1,11 @@
- import { PersonButton } from "@/Components/button";
- import ContactForm from "@/Components/form";
- import {persons} from "@/lib/data";
+
 import Image from "next/image";
+import Contact from "@/Components/contact";
+
 
 const HomePage = () => {
+
+
   return (
     <div className="flex justify-start items-center w-full flex-col h-full bg-gradient-to-b from-background to-primary/10 pb-5 md:pb-10">
 
@@ -24,15 +26,7 @@ const HomePage = () => {
         <div className="left-0 bottom-0 absolute size-[152px] rounded-full blur-[200px] bg-violet-800" />
 
         <div className="w-full h-full p-5 flex justify-between items-start relative z-20 flex-col md:flex-row">
-          <div className="w-full max-w-[516px] relative flex flex-col justify-center items-center">
-           <h2 className="font-semibold md:text-[29px] text-[25px] md:leading-[39.06px] leading-[28px] tracking-[-2%] bg-gradient-to-r from-blue-500  to-pink-700 text-transparent bg-clip-text py-3 ">✨Let’s connect, collaborate, and create something extraordinary!✨</h2> 
-           <div className="flex flex-row gap-5 md:mt-5 mt-2 mb-2 md:mb-5">
-            {persons.map((person) => (
-              <PersonButton key={person.id}>{person.name}</PersonButton>
-            ))}
-          </div>
-          <ContactForm />
-          </div>
+          <Contact/>
           
 
           <div className="w-full max-w-[516px] relative">

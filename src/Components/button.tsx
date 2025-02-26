@@ -1,18 +1,21 @@
 import {FC, ButtonHTMLAttributes} from "react";
 
+type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: React.ReactNode;
+};
 
-type IChildren = {children: React.ReactNode}
-type IButton = ButtonHTMLAttributes<HTMLButtonElement>;
-export const PersonButton : FC<IChildren> = ({children}) => {
+export const PersonButton: FC<IButtonProps> = ({ children, ...props }) => {
     return (
-        <button className="bg-primary text-sm font-medium hover:bg-secondary transition-all duration-300 text-white px-4 py-2 rounded-full active:scale-95 active:bg-gradient-to-r from-pink-500 to-purple-800 hover:scale-105">
+        <button
+            {...props}
+            className="bg-primary text-sm font-medium hover:bg-secondary transition-all duration-300 text-white px-4 py-2 rounded-full active:scale-95 active:bg-gradient-to-r from-pink-500 to-purple-800 hover:scale-105"
+        >
             {children}
         </button>
     )
 }
 
-
-export const Button: FC<IButton> = ({ children, ...props }) => {
+export const Button: FC<IButtonProps> = ({ children, ...props }) => {
     return (
       <button
         {...props}
