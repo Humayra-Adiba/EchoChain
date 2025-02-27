@@ -7,13 +7,13 @@ interface IPerson {
 export const persons: IPerson[] = [
 
   {
-    id: 2,
+    id: 1,
     name: "Abdullah",
     email: "abdullah@gmail.com",
   },
   {
-    id: 3,
+    id: 2,
     name: "Humayra",
-    email: "humayra@gmail.com",
+    email: "humayra.adiba2000@gmail.com",
   },
 ];

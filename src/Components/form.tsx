@@ -1,55 +1,74 @@
+"use client";
 
-'use client';
-
-
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Input, TextArea } from './input';
-import { Button } from './button';
-import { FC } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { Input, TextArea } from "./input";
+import { Button } from "./button";
+import { FC } from "react";
+import { sendMessage } from "@/utils/mail";
+import { toast } from "sonner";
+import { persons } from "@/lib/data";
 
 interface IParson {
-    id: number;
-    name: string;
-    email: string;
+  id: number;
+  name: string;
+  email: string;
 }
 
-interface ContactForm {
+export interface ContactForm {
   firstName: string;
   lastName: string;
+  name: string;
   email: string;
   phone: string;
   message: string;
 }
 
 const defaultValue: ContactForm = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  message: '',
+  firstName: "",
+  lastName: "",
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
 };
 
-type ContactFormProps = { activePerson: IParson[]};
+type ContactFormProps = { activePerson: IParson[] };
 
-const ContactForm:FC<ContactFormProps> = ({activePerson}: ContactFormProps) => {
+const ContactForm: FC<ContactFormProps> = ({
+  activePerson,
+}: ContactFormProps) => {
   const [data, setData] = useState<ContactForm>(defaultValue);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setData((prev) => ({
       ...prev,
-      [name]: value, 
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   console.log('data :', data);
+  // };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('data :', data);
-  };
+    const parsons = activePerson.map((parson) => parson.email);
 
+    if (data.firstName && data.email && data.phone && data.message) {
+      await sendMessage(parsons, data);
+      setData(defaultValue);
+      console.log('data :', data);
+    } else {
+      console.error("Please fill all the fields!");
+    }
+    };
+ 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-3.5 py-2'>
-      <div className='flex flex-row gap-3.5'>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 py-2">
+      <div className="flex flex-row gap-3.5">
         <Input
           type="text"
           placeholder="First Name"
@@ -85,9 +104,12 @@ const ContactForm:FC<ContactFormProps> = ({activePerson}: ContactFormProps) => {
         value={data.message}
         onChange={handleChange}
       />
-      <div className='mt-5'>
+      <div className="mt-5">
         <Button type="submit">
-          Send <span className="rotate-45 block text-2xl leading-none tracking-normal">🚀</span>
+          Send{" "}
+          <span className="rotate-45 block text-2xl leading-none tracking-normal">
+            🚀
+          </span>
         </Button>
       </div>
     </form>
